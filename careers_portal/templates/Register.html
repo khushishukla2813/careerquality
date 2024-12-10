@@ -1,0 +1,237 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            height: 80%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .half1, .half2 {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .half1 {
+            background-color: white;
+            color: rgb(2, 2, 18);
+            padding: 40px;
+        }
+
+        .half1 h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #0e2737;
+        }
+
+        label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 16px;
+            color: #888;
+            pointer-events: none;
+            transition: 0.2s;
+        }
+
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            top: -15px;
+            left: 5px;
+            font-size: 12px;
+            color: #0e2737;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #0e2737;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 48%;
+        }
+
+        button:hover {
+            background-color: #0a1d27;
+        }
+
+        .create-account {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .create-account a {
+            color: #0e2737;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+
+        .half2 {
+            background-color: #002d38;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .half2 img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .google-signup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: white;
+            color: #444;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .google-signup img {
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .google-signup:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="half1">
+            <h1>Create Account</h1>
+            <form method="post" action="{% url 'signup' %}">
+                {% csrf_token %}
+                
+                <div class="input-box">
+                    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+                    <label for="phone">Phone Number</label>
+                </div>
+                
+                <div class="input-box">
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">Password</label>
+                </div>
+                
+                
+                <div class="input-box">
+                    <input type="password" id="confirm-password" name="confirm_password" required>
+                    <label for="confirm-password">Confirm Password</label>
+                </div>
+                
+                  <div>
+                    <div class="select_type" style="width: fit-content;">
+                        <select name="user_type" id="user_type" required>
+                            <option value="" disabled selected>Select User Type</option>
+                            <option value="Partnership">Partnership</option>
+                            <option value="Candidate">Candidate</option>
+                            </select>
+                        </div>
+                        <br>
+                  </div>
+                <div class="button-group">
+                    <button type="submit">Signup</button>
+                    <button type="button" onclick="window.location.href=home">Cancel</button>
+                </div>
+            </form>
+            {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+            <button class="google-signup">
+                <img src="https://img.icons8.com/?size=100&id=V5cGWnc9R4xj&format=png&color=000000" alt="Google Logo">
+                Sign up with Google
+            </button>
+            <div class="create-account">
+                <h3>Already have an account? <a href="{% url 'login' %}">Login Here</a></h3>
+
+
+            </div>
+        </div>
+        <div class="half2">
+            <img src="{% static 'images/Artboard_1_2final.png' %}" alt="FarmTech Logo">
+        </div>
+    </div>
+</body>
+</html>
