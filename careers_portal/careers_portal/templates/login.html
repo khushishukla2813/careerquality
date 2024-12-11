@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Existing styles remain unchanged */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            height: 80%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .half1, .half2 {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .half1 {
+            background-color: white;
+            color: rgb(2, 2, 18);
+            padding: 40px;
+        }
+
+        .half1 h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: rgb(2, 2, 18);
+        }
+
+        label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 16px;
+            color: #888;
+            pointer-events: none;
+            transition: 0.2s;
+        }
+
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            top: -15px;
+            left: 5px;
+            font-size: 12px;
+            color: rgb(2, 2, 18);
+        }
+
+        a {
+            color: rgb(2, 2, 18);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #0e2737;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 48%;
+        }
+
+        button:hover {
+            background-color: rgb(2, 2, 18);
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            background-color: #888;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .back-btn:hover {
+            background-color: #666;
+        }
+
+        .create-account {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .create-account a {
+            color: #0e2737;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+
+        .half2 {
+            background-color: #002d38;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .half2 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .google-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: white;
+            color: #444;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .google-login img {
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .google-login:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="half1">
+            <h1>Login Here!</h1>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="input-box">
+                    <input type="text" id="email" name="email" required>
+                    <label for="username">Username</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">Password</label>
+                </div>
+                
+                <a href="#">Forgot Password?</a>
+                <div class="button-group">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+            {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+            <button class="google-login">
+                <img src="https://img.icons8.com/?size=100&id=V5cGWnc9R4xj&format=png&color=000000" alt="Google Logo">
+                Login with Google
+            </button>
+            <div class="create-account">
+                <h3>Don't have an account? <a href="{% url 'signup' %}">Create Account</a></h3>
+            </div>
+        </div>
+        <div class="half2">
+            <img src="{% static 'images/Artboard_1_2final.png' %}"  alt="FarmTech Logo">
+        </div>
+    </div>
+</body>
+</html>
